@@ -1,0 +1,67 @@
+# Preprocessing configuration for BCI Competition IV-2a dataset
+# 4-class motor imagery: left hand, right hand, feet, tongue
+# 22 EEG channels, 250 Hz, 9 subjects
+
+preprocessing:
+  # Channel selection
+  picks: 'eeg'  # Keep only EEG channels, drop EOG
+
+  # Filtering parameters
+  filter:
+    l_freq: 0.5      # High-pass cutoff (Hz) - removes slow drifts
+    h_freq: 40.0     # Low-pass cutoff (Hz) - removes high-frequency noise
+    notch: 50        # Notch filter frequency (50 Hz for Europe, 60 Hz for US)
+
+  # Referencing
+  reference: 'average'  # Common average reference (CAR)
+
+  # Resampling
+  resample: 250      # Target sampling rate (Hz) - dataset is already 250 Hz
+
+  # Epoching parameters (Motor Imagery specific)
+  epoch:
+    tmin: 0.5        # Start time relative to cue onset (s)
+                     # Motor imagery cue appears at t=0
+                     # We start at 0.5s to capture steady-state MI
+    tmax: 3.5        # End time relative to cue onset (s)
+                     # Total epoch length: 3.0 seconds
+    baseline: null   # No baseline correction for MI
+
+  # Artifact removal
+  artifact:
+    ica: false                   # Apply ICA (set false for faster processing)
+    amplitude_threshold: 100e-6  # Amplitude rejection threshold (100 µV)
+
+  # Normalization method
+  normalization: 'zscore'  # 'zscore' or 'minmax'
+                          # zscore: zero mean, unit variance per channel
+                          # minmax: scale to [-1, 1] (needed for GAF)
+
+# Dataset-specific information
+dataset:
+  name: 'bci_iv_2a'
+  subjects: [1, 2, 3, 4, 5, 6, 7, 8, 9]  # All 9 subjects
+  sessions: ['T', 'E']                    # T=training, E=evaluation
+  n_classes: 4
+  classes: ['left_hand', 'right_hand', 'feet', 'tongue']
+  event_ids:
+    left_hand: 769
+    right_hand: 770
+    feet: 771
+    tongue: 772
+  sfreq: 250  # Sampling frequency (Hz)
+  n_channels: 22  # EEG channels only
+
+# Processing options
+processing:
+  # Which subjects to process (empty list = all subjects)
+  subjects_to_process: []  # Leave empty to process all
+
+  # Which sessions to process
+  sessions_to_process: ['T']  # Start with training data only
+
+  # Output directory
+  output_dir: 'data/preprocessed/bci_iv_2a'
+
+  # Parallel processing
+  n_jobs: 1  # Number of parallel jobs (1 = sequential)
