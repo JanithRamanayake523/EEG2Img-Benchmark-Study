@@ -1,0 +1,106 @@
+# Model Comparison Configuration
+# Compare performance across multiple architectures
+
+name: model_comparison
+description: Compare all implemented model architectures
+seed: 42
+device: cuda
+save_dir: results
+
+# Dataset configuration
+dataset:
+  name: BCI-IV-2a
+  file_path: data/BCI_IV_2a.hdf5
+  split_ratio: 0.8
+  validation_split: 0.1
+
+# Standard augmentation
+augmentation:
+  enabled: true
+  transforms:
+    - name: horizontal_flip
+      enabled: true
+      p: 0.5
+    - name: rotation
+      enabled: true
+      degrees: 15
+  mixup_alpha: 1.0
+  cutmix_alpha: 0.0
+
+# Compare all models
+models:
+  - name: resnet18
+    architecture: resnet18
+    num_classes: 4
+    in_channels: 25
+    pretrained: false
+
+  - name: resnet50
+    architecture: resnet50
+    num_classes: 4
+    in_channels: 25
+    pretrained: false
+
+  - name: vit_tiny
+    architecture: vit_tiny
+    num_classes: 4
+    in_channels: 25
+    pretrained: false
+
+  - name: vit_small
+    architecture: vit_small
+    num_classes: 4
+    in_channels: 25
+    pretrained: false
+
+  - name: lightweight_cnn
+    architecture: lightweight_cnn
+    num_classes: 4
+    in_channels: 25
+    pretrained: false
+
+  - name: cnn_1d
+    architecture: cnn_1d
+    num_classes: 4
+    in_channels: 25
+    pretrained: false
+
+  - name: lstm
+    architecture: lstm
+    num_classes: 4
+    in_channels: 25
+    pretrained: false
+
+  - name: eegnet
+    architecture: eegnet
+    num_classes: 4
+    in_channels: 25
+    pretrained: false
+
+# Optimizer configuration
+optimizer:
+  name: adam
+  learning_rate: 0.001
+  weight_decay: 1.0e-4
+  momentum: 0.9
+
+# Training configuration
+training:
+  epochs: 100
+  batch_size: 32
+  num_workers: 0
+  early_stopping_patience: 10
+  mixed_precision: false
+  gradient_accumulation_steps: 1
+
+# Evaluation configuration
+evaluation:
+  metrics:
+    - accuracy
+    - f1
+    - auc
+    - kappa
+    - mcc
+  robustness_tests: true
+  statistical_tests: true
+  visualization: true

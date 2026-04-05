@@ -1,0 +1,56 @@
+# Baseline Experiment Configuration
+# Single model training without augmentation
+
+name: baseline_resnet18
+description: Baseline experiment with ResNet-18 and default parameters
+seed: 42
+device: cuda
+save_dir: results
+
+# Dataset configuration
+dataset:
+  name: BCI-IV-2a
+  file_path: data/BCI_IV_2a.hdf5
+  split_ratio: 0.8
+  validation_split: 0.1
+
+# No augmentation for baseline
+augmentation:
+  enabled: false
+  transforms: []
+  mixup_alpha: 0.0
+  cutmix_alpha: 0.0
+
+# Model configuration
+models:
+  - name: resnet18
+    architecture: resnet18
+    num_classes: 4
+    in_channels: 25
+    pretrained: false
+
+# Optimizer configuration
+optimizer:
+  name: adam
+  learning_rate: 0.001
+  weight_decay: 0.0
+  momentum: 0.9
+
+# Training configuration
+training:
+  epochs: 100
+  batch_size: 32
+  num_workers: 0
+  early_stopping_patience: 10
+  mixed_precision: false
+  gradient_accumulation_steps: 1
+
+# Evaluation configuration
+evaluation:
+  metrics:
+    - accuracy
+    - f1
+    - auc
+  robustness_tests: false
+  statistical_tests: false
+  visualization: true
