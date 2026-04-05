@@ -45,6 +45,11 @@ from .visualization import (
     plot_all_results
 )
 
+from .aggregate_results import (
+    ResultsAggregator,
+    aggregate_and_report
+)
+
 __all__ = [
     # Metrics
     'compute_metrics',
@@ -78,4 +83,8 @@ __all__ = [
     'plot_robustness_curves',
     'plot_statistical_comparison',
     'plot_all_results',
+
+    # Results aggregation
+    'ResultsAggregator',
+    'aggregate_and_report',
 ]
