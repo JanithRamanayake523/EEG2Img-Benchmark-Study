@@ -1,0 +1,290 @@
+[
+  {
+    "name": "GAF Summation",
+    "config": {
+      "method": "summation",
+      "image_size": 128
+    },
+    "status": "PASS",
+    "messages": [
+      "[OK] Transformer initialized",
+      "[OK] Transform completed in 7.051s",
+      "[OK] Value range [-1.000, 1.000]",
+      "[OK] No NaN values",
+      "[OK] No Inf values",
+      "[OK] Stats: mean=-0.723, std=0.355",
+      "[OK] Memory: 27.50 MB for 10 epochs"
+    ],
+    "time_total": 7.050936999999976,
+    "time_per_epoch": 0.7050936999999976,
+    "output_shape": [
+      10,
+      22,
+      128,
+      128
+    ],
+    "output_dtype": "float64",
+    "value_range": [
+      -1.0000000000000004,
+      1.0000000000000009
+    ],
+    "statistics": {
+      "mean": -0.7231451522387565,
+      "std": 0.35493457790539595,
+      "min": -1.0000000000000004,
+      "max": 1.0000000000000009
+    },
+    "memory_mb": 27.5
+  },
+  {
+    "name": "GAF Difference",
+    "config": {
+      "method": "difference",
+      "image_size": 128
+    },
+    "status": "PASS",
+    "messages": [
+      "[OK] Transformer initialized",
+      "[OK] Transform completed in 1.523s",
+      "[OK] Value range [-1.000, 1.000]",
+      "[OK] No NaN values",
+      "[OK] No Inf values",
+      "[OK] Stats: mean=-0.000, std=0.592",
+      "[OK] Memory: 27.50 MB for 10 epochs"
+    ],
+    "time_total": 1.522788699998273,
+    "time_per_epoch": 0.1522788699998273,
+    "output_shape": [
+      10,
+      22,
+      128,
+      128
+    ],
+    "output_dtype": "float64",
+    "value_range": [
+      -0.9999999999997942,
+      0.9999999999997942
+    ],
+    "statistics": {
+      "mean": -1.5770213417970974e-19,
+      "std": 0.5921284308346846,
+      "min": -0.9999999999997942,
+      "max": 0.9999999999997942
+    },
+    "memory_mb": 27.5
+  },
+  {
+    "name": "MTF Q=8",
+    "config": {
+      "n_bins": 8,
+      "image_size": 64
+    },
+    "status": "PASS",
+    "messages": [
+      "[OK] Transformer initialized",
+      "[OK] Transform completed in 2.607s",
+      "[OK] Value range [0.000, 0.740]",
+      "[OK] No NaN values",
+      "[OK] No Inf values",
+      "[OK] Stats: mean=0.125, std=0.093",
+      "[OK] Memory: 6.88 MB for 10 epochs"
+    ],
+    "time_total": 2.607302999998865,
+    "time_per_epoch": 0.2607302999998865,
+    "output_shape": [
+      10,
+      22,
+      64,
+      64
+    ],
+    "output_dtype": "float64",
+    "value_range": [
+      0.0,
+      0.740109020573237
+    ],
+    "statistics": {
+      "mean": 0.12500232355711446,
+      "std": 0.09321602120118923,
+      "min": 0.0,
+      "max": 0.740109020573237
+    },
+    "memory_mb": 6.875
+  },
+  {
+    "name": "MTF Q=16",
+    "config": {
+      "n_bins": 16,
+      "image_size": 64
+    },
+    "status": "PASS",
+    "messages": [
+      "[OK] Transformer initialized",
+      "[OK] Transform completed in 0.650s",
+      "[OK] Value range [0.000, 0.392]",
+      "[OK] No NaN values",
+      "[OK] No Inf values",
+      "[OK] Stats: mean=0.063, std=0.052",
+      "[OK] Memory: 6.88 MB for 10 epochs"
+    ],
+    "time_total": 0.6496430999995937,
+    "time_per_epoch": 0.06496430999995936,
+    "output_shape": [
+      10,
+      22,
+      64,
+      64
+    ],
+    "output_dtype": "float64",
+    "value_range": [
+      0.0,
+      0.39229822401969383
+    ],
+    "statistics": {
+      "mean": 0.06250228546589329,
+      "std": 0.05173166367694343,
+      "min": 0.0,
+      "max": 0.39229822401969383
+    },
+    "memory_mb": 6.875
+  },
+  {
+    "name": "Recurrence Plot",
+    "config": {},
+    "status": "PASS",
+    "messages": [
+      "[OK] Transformer initialized",
+      "[OK] Transform completed in 2.666s",
+      "[OK] Value range [0.000, 1.000]",
+      "[OK] No NaN values",
+      "[OK] No Inf values",
+      "[OK] Stats: mean=0.096, std=0.295",
+      "[OK] Memory: 27.50 MB for 10 epochs"
+    ],
+    "time_total": 2.6660576999984187,
+    "time_per_epoch": 0.26660576999984187,
+    "output_shape": [
+      10,
+      22,
+      128,
+      128
+    ],
+    "output_dtype": "float64",
+    "value_range": [
+      0.0,
+      1.0
+    ],
+    "statistics": {
+      "mean": 0.09623302112926137,
+      "std": 0.29491054028907904,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "memory_mb": 27.5
+  },
+  {
+    "name": "Spectrogram",
+    "config": {},
+    "status": "PASS",
+    "messages": [
+      "[OK] Transformer initialized",
+      "[OK] Transform completed in 0.160s",
+      "[OK] Value range [0.000, 0.998]",
+      "[OK] No NaN values",
+      "[OK] No Inf values",
+      "[OK] Stats: mean=0.546, std=0.246",
+      "[OK] Memory: 27.50 MB for 10 epochs"
+    ],
+    "time_total": 0.15969120000045223,
+    "time_per_epoch": 0.015969120000045224,
+    "output_shape": [
+      10,
+      22,
+      128,
+      128
+    ],
+    "output_dtype": "float64",
+    "value_range": [
+      0.0,
+      0.9976631687349826
+    ],
+    "statistics": {
+      "mean": 0.5459105339602286,
+      "std": 0.2457999689118039,
+      "min": 0.0,
+      "max": 0.9976631687349826
+    },
+    "memory_mb": 27.5
+  },
+  {
+    "name": "Scalogram Morlet",
+    "config": {
+      "wavelet": "morl"
+    },
+    "status": "PASS",
+    "messages": [
+      "[OK] Transformer initialized",
+      "[OK] Transform completed in 2.213s",
+      "[OK] Value range [0.017, 1.000]",
+      "[OK] No NaN values",
+      "[OK] No Inf values",
+      "[OK] Stats: mean=0.817, std=0.117",
+      "[OK] Memory: 27.50 MB for 10 epochs"
+    ],
+    "time_total": 2.213082799999029,
+    "time_per_epoch": 0.22130827999990288,
+    "output_shape": [
+      10,
+      22,
+      128,
+      128
+    ],
+    "output_dtype": "float64",
+    "value_range": [
+      0.017385938270558256,
+      0.9997264185618069
+    ],
+    "statistics": {
+      "mean": 0.8172924607129133,
+      "std": 0.11713342141437555,
+      "min": 0.017385938270558256,
+      "max": 0.9997264185618069
+    },
+    "memory_mb": 27.5
+  },
+  {
+    "name": "Scalogram MexHat",
+    "config": {
+      "wavelet": "mexh"
+    },
+    "status": "PASS",
+    "messages": [
+      "[OK] Transformer initialized",
+      "[OK] Transform completed in 1.281s",
+      "[OK] Value range [0.014, 1.000]",
+      "[OK] No NaN values",
+      "[OK] No Inf values",
+      "[OK] Stats: mean=0.844, std=0.102",
+      "[OK] Memory: 27.50 MB for 10 epochs"
+    ],
+    "time_total": 1.2814199999993434,
+    "time_per_epoch": 0.12814199999993434,
+    "output_shape": [
+      10,
+      22,
+      128,
+      128
+    ],
+    "output_dtype": "float64",
+    "value_range": [
+      0.014396146437748909,
+      0.9999878874914949
+    ],
+    "statistics": {
+      "mean": 0.8443342511264399,
+      "std": 0.1023488140248865,
+      "min": 0.014396146437748909,
+      "max": 0.9999878874914949
+    },
+    "memory_mb": 27.5
+  }
+]

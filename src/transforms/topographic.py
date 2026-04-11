@@ -13,6 +13,7 @@ import numpy as np
 import mne
 from scipy.interpolate import griddata
 from scipy.signal import welch
+from scipy.integrate import trapezoid
 from typing import Tuple, Optional, Dict, List
 import argparse
 import h5py
@@ -185,7 +186,7 @@ class TopographicTransformer:
             freq_mask = (freqs >= band[0]) & (freqs <= band[1])
 
             # Integrate power in band
-            band_power[ch] = np.trapz(psd[freq_mask], freqs[freq_mask])
+            band_power[ch] = trapezoid(psd[freq_mask], freqs[freq_mask])
 
         return band_power
 

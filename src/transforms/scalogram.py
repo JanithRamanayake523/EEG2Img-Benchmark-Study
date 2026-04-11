@@ -59,13 +59,25 @@ class ScalogramTransformer:
             scales: Array of scales for CWT
         """
         # Get wavelet center frequency
-        wavelet_obj = pywt.ContinuousWavelet(self.wavelet)
-        center_freq = wavelet_obj.center_frequency
+        # Use pywt.scale2frequency to convert scales to frequencies
+        sampling_period = 1.0 / self.sfreq
+
+        # For CWT, we compute scales that correspond to frequencies in freq_range
+        # Using pywt.scale2frequency, we have: frequency = scale2frequency(wavelet, scale) / sampling_period
+        # So: scale = 1.0 / (scale2frequency(wavelet, 1) * frequency)
+
+        # Get center frequency by computing frequency at scale=1
+        try:
+            center_freq = pywt.scale2frequency(self.wavelet, 1.0)
+        except:
+            # Fallback for wavelets without center frequency
+            center_freq = 1.0
+
+        if center_freq is None or center_freq == 0:
+            center_freq = 1.0
 
         # Convert frequency range to scale range
         # scale = center_freq / (freq * sampling_period)
-        sampling_period = 1.0 / self.sfreq
-
         scale_min = center_freq / (self.freq_range[1] * sampling_period)
         scale_max = center_freq / (self.freq_range[0] * sampling_period)
 
