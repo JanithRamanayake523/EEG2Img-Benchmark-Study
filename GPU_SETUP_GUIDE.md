@@ -61,19 +61,25 @@ conda activate eeg2img
 
 **Choose your CUDA version and run the appropriate command:**
 
-#### Option A: CUDA 12.1 (Recommended for newer GPUs)
+#### Option A: CUDA 13.1 (Recommended for newest GPUs)
+
+```bash
+conda install pytorch torchvision torchaudio pytorch-cuda=13.1 -c pytorch -c nvidia
+```
+
+#### Option B: CUDA 12.1 (Recommended for recent GPUs)
 
 ```bash
 conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
 ```
 
-#### Option B: CUDA 11.8 (For older GPUs or systems)
+#### Option C: CUDA 11.8 (For older GPUs or systems)
 
 ```bash
 conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 ```
 
-#### Option C: CPU Only (No GPU - slower but works)
+#### Option D: CPU Only (No GPU - slower but works)
 
 ```bash
 conda install pytorch torchvision torchaudio cpuonly -c pytorch
