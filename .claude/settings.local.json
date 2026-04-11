@@ -8,7 +8,9 @@
       "Bash(git commit:*)",
       "Bash(iconv:*)",
       "Bash(git push:*)",
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "Bash(tree:*)",
+      "Bash(jupyter notebook:*)"
     ]
   }
 }
