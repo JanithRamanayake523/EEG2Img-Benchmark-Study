@@ -10,7 +10,8 @@
       "Bash(git push:*)",
       "Bash(test:*)",
       "Bash(tree:*)",
-      "Bash(jupyter notebook:*)"
+      "Bash(jupyter notebook:*)",
+      "Bash(ls:*)"
     ]
   }
 }
