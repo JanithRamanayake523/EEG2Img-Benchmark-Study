@@ -6,7 +6,9 @@
       "Bash(python:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(iconv:*)"
+      "Bash(iconv:*)",
+      "Bash(git push:*)",
+      "Bash(test:*)"
     ]
   }
 }

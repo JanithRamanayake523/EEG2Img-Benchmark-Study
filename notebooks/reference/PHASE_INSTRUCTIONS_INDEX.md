@@ -25,7 +25,7 @@ This document provides a comprehensive index to all 8 phase instruction notebook
 
 ## Phase 1: Project Infrastructure
 
-**File:** `PHASE_1_INSTRUCTIONS.md`
+**File:** `../phase_1_setup/PHASE_1_INSTRUCTIONS.md`
 
 ### What Happens
 - Creates project directory structure (8 main directories)
@@ -70,7 +70,7 @@ Dependencies:
 
 ## Phase 2: Data Acquisition & Preprocessing
 
-**File:** `PHASE_2_INSTRUCTIONS.md`
+**File:** `../phase_2_data_preprocessing/PHASE_2_INSTRUCTIONS.md`
 
 ### What Happens
 Downloads BCI Competition IV-2a dataset and preprocesses EEG signals through a multi-step pipeline:
@@ -139,7 +139,7 @@ python experiments/scripts/test_preprocessing.py
 
 ## Phase 3: Image Transformation Implementation
 
-**File:** `PHASE_3_INSTRUCTIONS.md`
+**File:** `../phase_3_image_transformations/PHASE_3_INSTRUCTIONS.md`
 
 ### What Happens
 Converts preprocessed EEG time-series (22 channels × 500 samples) into 2D images using 6 different transformation methods, enabling use of CNN and Vision Transformer models.
@@ -187,7 +187,7 @@ python experiments/scripts/transform_all_bci_iv_2a.py
 
 ### Validation Notebook
 ```
-notebooks/03_transform_examples.ipynb
+notebooks/phase_3_image_transformations/03_transform_examples.ipynb
   ├─ Theory for each transformation
   ├─ Visual demonstrations with synthetic signals
   ├─ Side-by-side comparison plots
@@ -228,7 +228,7 @@ Each file contains:
 
 ## Phase 4: Model Architecture Implementation
 
-**File:** `PHASE_4_INSTRUCTIONS.md`
+**File:** `../phase_4_model_architectures/PHASE_4_INSTRUCTIONS.md`
 
 ### What Happens
 Implements 11 deep learning architectures ready for training:
@@ -296,7 +296,7 @@ python experiments/scripts/test_models.py
 
 ## Phase 5: Training Infrastructure
 
-**File:** `PHASE_5_INSTRUCTIONS.md`
+**File:** `../phase_5_training_infrastructure/PHASE_5_INSTRUCTIONS.md`
 
 ### What Happens
 Implements complete training pipeline with augmentation, optimization, callbacks, and cross-validation.
@@ -385,7 +385,7 @@ python experiments/scripts/test_training.py
 
 ## Phase 6: Evaluation & Analysis Infrastructure
 
-**File:** `PHASE_6_INSTRUCTIONS.md`
+**File:** `../phase_6_evaluation_analysis/PHASE_6_INSTRUCTIONS.md`
 
 ### What Happens
 Comprehensive evaluation including 20+ metrics, statistical testing, robustness evaluation, and publication-quality visualizations.
@@ -467,7 +467,7 @@ Phase 5 training script automatically computes all Phase 6 metrics
 
 ## Phase 7: Experiment Orchestration
 
-**File:** `PHASE_7_INSTRUCTIONS.md`
+**File:** `../phase_7_orchestration/PHASE_7_INSTRUCTIONS.md`
 
 ### What Happens
 Implements configuration management and automated batch experiment execution with grid search.
@@ -562,7 +562,7 @@ python experiments/scripts/test_experiments.py
 
 ## Phase 8: Results Analysis & Reporting
 
-**File:** `PHASE_8_INSTRUCTIONS.md`
+**File:** `../phase_8_results_reporting/PHASE_8_INSTRUCTIONS.md`
 
 ### What Happens
 Aggregates results from all experiments and generates comprehensive analysis, visualizations, and publication-ready manuscript.
@@ -600,7 +600,7 @@ ResultsAggregator:
 
 ### Analysis Notebook
 ```
-notebooks/04_results_analysis.ipynb
+notebooks/phase_8_results_reporting/04_results_analysis.ipynb
 ├─ Section 1: Data loading & exploration
 ├─ Section 2: Descriptive statistics
 ├─ Section 3: Model performance comparison
@@ -723,7 +723,7 @@ print(agg.create_summary_report())
 # Time: < 1 minute
 
 # View interactive analysis
-jupyter notebook notebooks/04_results_analysis.ipynb
+jupyter notebook notebooks/phase_8_results_reporting/04_results_analysis.ipynb
 # Time: Variable (exploration)
 ```
 
@@ -839,15 +839,28 @@ Phase 5+:
 ### Instruction Files (You are here)
 ```
 notebooks/
-├─ PHASE_1_INSTRUCTIONS.md
-├─ PHASE_2_INSTRUCTIONS.md
-├─ PHASE_3_INSTRUCTIONS.md
-├─ PHASE_4_INSTRUCTIONS.md
-├─ PHASE_5_INSTRUCTIONS.md
-├─ PHASE_6_INSTRUCTIONS.md
-├─ PHASE_7_INSTRUCTIONS.md
-├─ PHASE_8_INSTRUCTIONS.md
-└─ PHASE_INSTRUCTIONS_INDEX.md (this file)
+├─ phase_1_setup/
+│  └─ PHASE_1_INSTRUCTIONS.md
+├─ phase_2_data_preprocessing/
+│  ├─ PHASE_2_INSTRUCTIONS.md
+│  ├─ PHASE_2_DETAILED_EXPLANATION.ipynb
+│  └─ 02_preprocessing_validation.ipynb
+├─ phase_3_image_transformations/
+│  ├─ PHASE_3_INSTRUCTIONS.md
+│  └─ 03_transform_examples.ipynb
+├─ phase_4_model_architectures/
+│  └─ PHASE_4_INSTRUCTIONS.md
+├─ phase_5_training_infrastructure/
+│  └─ PHASE_5_INSTRUCTIONS.md
+├─ phase_6_evaluation_analysis/
+│  └─ PHASE_6_INSTRUCTIONS.md
+├─ phase_7_orchestration/
+│  └─ PHASE_7_INSTRUCTIONS.md
+├─ phase_8_results_reporting/
+│  ├─ PHASE_8_INSTRUCTIONS.md
+│  └─ 04_results_analysis.ipynb
+└─ reference/
+   └─ PHASE_INSTRUCTIONS_INDEX.md (this file)
 ```
 
 ### Source Code
