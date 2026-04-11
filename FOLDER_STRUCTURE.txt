@@ -1,0 +1,171 @@
+================================================================================
+EEG2Img-Benchmark-Study: New Documentation Folder Structure
+================================================================================
+
+PROJECT ROOT
+│
+├── 📖 README.md                           Main project documentation
+├── 📖 DOCUMENTATION_MAP.md                Complete documentation map & navigation
+├── 📖 ORGANIZATION_SUMMARY.txt            This reorganization summary
+│
+├── 📚 notebooks/                          Learning & exploration materials
+│   ├── 📖 README.md                       Navigation guide for notebooks
+│   ├── 📁 phase_1_setup/
+│   │   └── PHASE_1_INSTRUCTIONS.md
+│   ├── 📁 phase_2_data_preprocessing/
+│   │   ├── PHASE_2_INSTRUCTIONS.md
+│   │   ├── PHASE_2_DETAILED_EXPLANATION.ipynb
+│   │   └── 02_preprocessing_validation.ipynb
+│   ├── 📁 phase_3_image_transformations/
+│   │   ├── PHASE_3_INSTRUCTIONS.md
+│   │   └── 03_transform_examples.ipynb
+│   ├── 📁 phase_4_model_architectures/
+│   │   └── PHASE_4_INSTRUCTIONS.md
+│   ├── 📁 phase_5_training_infrastructure/
+│   │   └── PHASE_5_INSTRUCTIONS.md
+│   ├── 📁 phase_6_evaluation_analysis/
+│   │   └── PHASE_6_INSTRUCTIONS.md
+│   ├── 📁 phase_7_orchestration/
+│   │   └── PHASE_7_INSTRUCTIONS.md
+│   ├── 📁 phase_8_results_reporting/
+│   │   ├── PHASE_8_INSTRUCTIONS.md
+│   │   └── 04_results_analysis.ipynb
+│   └── 📁 reference/
+│       └── PHASE_INSTRUCTIONS_INDEX.md   Master index for all phases
+│
+├── 📚 docs/                              Guides, validation & reports
+│   ├── 📖 README.md                       Navigation guide for documentation
+│   ├── 📁 guides/
+│   │   ├── GPU_SETUP_GUIDE.md
+│   │   └── PHASE_INSTRUCTIONS_GUIDE.md
+│   ├── 📁 validation/
+│   │   ├── PHASE3_VALIDATION.md
+│   │   ├── PHASE4_VALIDATION.md
+│   │   ├── PHASE5_VALIDATION.md
+│   │   ├── PHASE6_VALIDATION.md
+│   │   ├── PHASE7_VALIDATION.md
+│   │   └── PHASE8_VALIDATION.md
+│   └── 📁 reports/
+│       ├── PROJECT_COMPLETION_REPORT.md
+│       └── FINAL_SUMMARY.txt
+│
+├── 💻 src/                               Source code (unchanged)
+│   ├── data/
+│   ├── transforms/
+│   ├── models/
+│   ├── training/
+│   ├── evaluation/
+│   └── experiments/
+│
+├── 🧪 experiments/                       Experiment scripts & configs
+│   ├── scripts/
+│   └── configs/
+│
+├── 📊 data/                              Datasets
+│   ├── raw/
+│   ├── preprocessed/
+│   └── transformed/
+│
+├── 📈 results/                           Outputs
+│   ├── models/
+│   ├── logs/
+│   ├── metrics/
+│   ├── figures/
+│   └── analysis/
+│
+├── 🧬 tests/                             Test files
+│
+└── ⚙️  Configuration files
+    ├── requirements.txt
+    ├── setup.py
+    ├── .gitignore
+    └── etc.
+
+================================================================================
+LEGEND
+================================================================================
+
+📖 = Documentation file (Markdown, text)
+📁 = Folder/Directory
+📚 = Documentation folder
+💻 = Source code folder
+🧪 = Experiment scripts
+📊 = Data folder
+📈 = Results folder
+🧬 = Tests folder
+⚙️  = Config files
+
+================================================================================
+QUICK REFERENCE: WHERE TO FIND WHAT
+================================================================================
+
+WANT TO UNDERSTAND...                      GO TO...
+────────────────────────────────────────────────────────────────────────────
+The entire project                    → DOCUMENTATION_MAP.md
+Phase 1 (Setup)                       → notebooks/phase_1_setup/
+Phase 2 (Data Preprocessing)          → notebooks/phase_2_data_preprocessing/
+Phase 3 (Image Transformations)       → notebooks/phase_3_image_transformations/
+Phase 4 (Model Architectures)         → notebooks/phase_4_model_architectures/
+Phase 5 (Training Infrastructure)     → notebooks/phase_5_training_infrastructure/
+Phase 6 (Evaluation & Analysis)       → notebooks/phase_6_evaluation_analysis/
+Phase 7 (Orchestration)               → notebooks/phase_7_orchestration/
+Phase 8 (Results Reporting)           → notebooks/phase_8_results_reporting/
+All phases at a glance                → notebooks/reference/PHASE_INSTRUCTIONS_INDEX.md
+GPU setup instructions                → docs/guides/GPU_SETUP_GUIDE.md
+How to use instruction files          → docs/guides/PHASE_INSTRUCTIONS_GUIDE.md
+Phase 3 validation results            → docs/validation/PHASE3_VALIDATION.md
+Phase 4 validation results            → docs/validation/PHASE4_VALIDATION.md
+Phase 5 validation results            → docs/validation/PHASE5_VALIDATION.md
+Project completion status             → docs/reports/PROJECT_COMPLETION_REPORT.md
+Quick project summary                 → docs/reports/FINAL_SUMMARY.txt
+Navigation for notebooks folder       → notebooks/README.md
+Navigation for docs folder            → docs/README.md
+This reorganization summary           → ORGANIZATION_SUMMARY.txt
+All code and algorithms               → src/
+Experiment scripts                    → experiments/scripts/
+Experiment configurations             → experiments/configs/
+
+================================================================================
+STATISTICS
+================================================================================
+
+Documentation Files Organized: 27
+New Folders Created: 15
+New Navigation Guides: 3 (README files)
+Total Documentation Size: ~58,000 words
+
+Commits Made: 2
+├── Commit 1: Reorganize documentation (6f4e7c8)
+└── Commit 2: Add organization summary (c6c58aa)
+
+Status: ✅ ALL CHANGES COMMITTED AND READY
+
+================================================================================
+START HERE
+================================================================================
+
+NEW TO THE PROJECT?
+  1. Read: README.md (project overview)
+  2. Read: DOCUMENTATION_MAP.md (complete map)
+  3. Read: notebooks/reference/PHASE_INSTRUCTIONS_INDEX.md (phase overview)
+
+WANT TO RUN EXPERIMENTS?
+  1. Read: docs/guides/GPU_SETUP_GUIDE.md (setup GPU if needed)
+  2. Read: notebooks/phase_N/PHASE_N_INSTRUCTIONS.md (your target phase)
+  3. Run: The corresponding experiment script
+  4. Check: docs/validation/PHASE_N_VALIDATION.md (verify success)
+
+WANT TO UNDERSTAND CODE?
+  1. Read: notebooks/reference/PHASE_INSTRUCTIONS_INDEX.md
+  2. Read: notebooks/phase_N/PHASE_N_INSTRUCTIONS.md
+  3. Explore: notebooks/phase_N/*.ipynb (see examples)
+  4. Read: src/ (source code)
+
+HAVE QUESTIONS?
+  → Check the README.md in any folder
+  → Check DOCUMENTATION_MAP.md for complete overview
+  → Check ORGANIZATION_SUMMARY.txt for what was organized
+
+================================================================================
+SUCCESS! Your documentation is now perfectly organized.
+================================================================================
