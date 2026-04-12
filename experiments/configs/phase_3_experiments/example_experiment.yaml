@@ -1,0 +1,62 @@
+# Example Experiment Configuration
+# Combines base, transform, and model configs for a specific experiment
+
+# Experiment identification
+experiment:
+  name: "BCI_IV_2a_GAF_ResNet18_KFold5"
+  description: "GAF transformation with ResNet-18 on BCI Competition IV-2a dataset"
+  dataset: "bci_iv_2a"
+  subject: "A01T"  # or "all" for all subjects
+  transform: "gaf_summation"
+  model: "resnet18"
+
+# Data configuration
+data:
+  path: "data/BCI_IV_2a.hdf5"
+  channels: 22
+  samples_per_epoch: 751
+  sampling_rate: 250
+  num_classes: 4
+
+# Transform configuration (from transform_configs.yaml)
+transform:
+  type: "gaf"
+  method: "summation"
+  image_size: 128
+  channel_strategy: "stacking"  # How to handle multi-channel data
+
+# Model configuration (from model_configs.yaml)
+model:
+  architecture: "resnet18"
+  pretrained: true
+  num_classes: 4
+  dropout: 0.5
+  in_channels: 1  # Will be adjusted based on channel_strategy
+
+# Training configuration
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  max_epochs: 100
+  optimizer: "adam"
+  scheduler: "cosine"
+
+# Validation configuration
+validation:
+  strategy: "kfold"
+  k_folds: 5
+  stratified: true
+
+# Hardware
+hardware:
+  device: "cuda:0"
+  num_workers: 4
+  pin_memory: true
+
+# Paths
+output:
+  results_dir: "results/phase3/gaf_resnet18"
+  save_model: true
+  save_predictions: true
+  save_confusion_matrix: true

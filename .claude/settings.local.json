@@ -25,7 +25,11 @@
       "Bash(grep:*)",
       "Bash(for file in fig1_dataset_overview.py fig2_preprocessing_pipeline.py fig3_ica_components.py fig4_epoch_analysis.py fig6_summary_dashboard.py)",
       "Bash(do sed -i 's/✓/OK/g' \"$file\")",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(du -sh:*)",
+      "Bash(cat:*)"
     ]
   }
 }

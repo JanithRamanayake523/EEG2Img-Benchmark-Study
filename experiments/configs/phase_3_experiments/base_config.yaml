@@ -1,0 +1,72 @@
+# Base Configuration for Phase 3 Experiments
+# Shared parameters across all experiments
+
+# Experiment tracking
+experiment:
+  project_name: "EEG2Img-Benchmark"
+  tags: ["phase3", "bci", "motor-imagery"]
+  save_checkpoints: true
+  checkpoint_frequency: 5  # Save every N epochs
+  use_wandb: false  # Set to true to enable Weights & Biases logging
+
+# Random seeds for reproducibility
+random:
+  seed: 42
+  deterministic: true
+  benchmark: false
+
+# Hardware
+hardware:
+  device: "cuda"  # cuda, cpu, or cuda:0, cuda:1, etc.
+  num_workers: 4  # DataLoader workers
+  pin_memory: true
+  mixed_precision: false  # Use automatic mixed precision (AMP)
+
+# Data
+data:
+  data_root: "data"
+  cache_transforms: false  # Cache transformed images (requires more disk space)
+  preprocessing:
+    normalize: true
+    standardize: true
+
+# Training
+training:
+  batch_size: 32
+  max_epochs: 100
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  optimizer: "adam"  # adam, sgd, adamw
+  scheduler: "cosine"  # cosine, step, plateau, none
+  early_stopping:
+    enabled: true
+    patience: 15
+    min_delta: 0.001
+  gradient_clipping:
+    enabled: false
+    max_norm: 1.0
+
+# Validation
+validation:
+  strategy: "kfold"  # kfold, loso, holdout
+  k_folds: 5
+  val_split: 0.2  # Used for holdout validation
+  stratified: true
+
+# Logging
+logging:
+  log_frequency: 10  # Log every N batches
+  save_best_only: true
+  metrics:
+    - accuracy
+    - f1_score
+    - precision
+    - recall
+    - confusion_matrix
+
+# Paths
+paths:
+  results_dir: "results/phase3"
+  models_dir: "results/phase3/models"
+  figures_dir: "results/phase3/figures"
+  logs_dir: "results/phase3/logs"

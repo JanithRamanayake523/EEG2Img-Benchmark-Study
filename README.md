@@ -1,167 +1,388 @@
-# EEG Time-Series-to-Image Transformation Benchmark Study
+# EEG-to-Image Transformation Benchmark Study
 
-A comprehensive benchmark study comparing multiple time-series-to-image (T2I) transformations for EEG classification across diverse Brain-Computer Interface (BCI) paradigms.
+A comprehensive benchmark study comparing different EEG-to-image transformation methods for motor imagery classification using deep learning.
 
-## 🎯 Research Objectives
+## Overview
 
-- Systematically evaluate GAF, MTF, Recurrence Plots, Spectrograms, and Scalograms for EEG classification
-- Compare CNN and Vision Transformer models against raw-signal baselines
-- Test across Motor Imagery, P300, and SSVEP paradigms
-- Assess robustness to noise, channel dropout, and cross-subject generalization
+This project investigates whether transforming EEG signals into 2D images can improve classification performance using state-of-the-art computer vision models.
 
-## 📊 Datasets
+**Dataset**: BCI Competition IV-2a (9 subjects, 4 motor imagery classes)
+**EEG Channels**: 22 channels (EEG only, EOG excluded)
+**Total Trials**: 2,216 (pooled across all subjects)
+**Task**: 4-class motor imagery classification (left hand, right hand, feet, tongue)
 
-1. **BCI Competition IV-2a**: 4-class motor imagery (22 channels, 9 subjects)
-2. **PhysioNet EEGMMI**: Motor movement/imagery (64 channels, 109 subjects)
-3. **BCI Competition III - P300 Speller**: P300 ERP task (64 channels)
-4. **SSVEP Datasets**: Frequency-tagged visual stimuli (64-ch and 8-ch variants)
+---
 
-## 🛠️ Installation
+## Quick Start
 
-### Prerequisites
-- Python 3.8+
-- CUDA-compatible GPU (recommended)
-- 16GB+ RAM
+### 1. Prerequisites
 
-### Setup
 ```bash
-# Clone repository
-git clone https://github.com/JanithRamanayake523/EEG2Img-Benchmark-Study.git
-cd EEG2Img-Benchmark-Study
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
+# Python 3.8+
 pip install -r requirements.txt
 
-# Install package in development mode
+# For GPU support (recommended)
+# CUDA 11.8+ and compatible PyTorch
+```
+
+### 2. Data Preparation
+
+The preprocessed EEG-only dataset is required:
+
+```bash
+# If not already created, generate EEG-only dataset (22 channels)
+python experiments/phase_2_preprocessing/create_eeg_only_dataset.py
+```
+
+**Output**: `data/BCI_IV_2a_EEG_only.hdf5` (270 MB)
+- Shape: (2216, 22, 751)
+- 22 EEG channels, 751 timepoints (3.004 sec @ 250 Hz)
+
+### 3. Run Experiments
+
+#### Baseline Models (Raw Time-Series)
+
+```bash
+# 1D CNN
+python experiments/phase_3_benchmark_experiments/04_train_baselines.py --model cnn1d --device cuda:0
+
+# BiLSTM
+python experiments/phase_3_benchmark_experiments/04_train_baselines.py --model bilstm --device cuda:0
+
+# Transformer
+python experiments/phase_3_benchmark_experiments/04_train_baselines.py --model transformer --device cuda:0
+```
+
+#### Image-Based Models
+
+```bash
+# ResNet-18 with GAF transformation
+python experiments/phase_3_benchmark_experiments/05_run_experiments.py \
+    --transform gaf_summation \
+    --model resnet18 \
+    --device cuda:0
+
+# Vision Transformer with MTF transformation
+python experiments/phase_3_benchmark_experiments/05_run_experiments.py \
+    --transform mtf \
+    --model vit_base \
+    --device cuda:0
+```
+
+#### Run All Experiments
+
+```bash
+# Run complete benchmark (9 transforms × 5 models = 45 combinations)
+python experiments/phase_3_benchmark_experiments/run_all_experiments.py --device cuda:0
+```
+
+---
+
+## Project Structure
+
+```
+EEG2Img-Benchmark-Study/
+│
+├── README.md                          # This file
+├── requirements.txt                   # Python dependencies
+│
+├── data/                              # Data files
+│   ├── BCI_IV_2a_EEG_only.hdf5       # Primary dataset (22 EEG channels)
+│   ├── raw/                           # Raw BCI IV-2a files (downloaded)
+│   └── preprocessed/                  # Individual preprocessed files
+│
+├── src/                               # Source code
+│   ├── data/                          # Data loaders and preprocessors
+│   ├── models/                        # Model architectures
+│   │   ├── baselines.py              # 1D CNN, BiLSTM, Transformer
+│   │   ├── cnn_models.py             # ResNet, Lightweight CNN
+│   │   └── vit_models.py             # Vision Transformer variants
+│   ├── transforms/                    # EEG-to-image transformations
+│   │   ├── gaf.py                    # Gramian Angular Field
+│   │   ├── mtf.py                    # Markov Transition Field
+│   │   └── recurrence.py             # Recurrence Plot
+│   └── utils/                         # Utilities
+│
+├── experiments/                       # Experiment scripts
+│   ├── phase3/                        # Phase 3: Benchmark experiments
+│   │   ├── 01_validate_transforms.py # Validate transformations
+│   │   ├── 02_validate_models.py     # Validate model architectures
+│   │   ├── 03_test_pipeline.py       # Test end-to-end pipeline
+│   │   ├── 04_train_baselines.py     # Train baseline models
+│   │   ├── 05_run_experiments.py     # Run image-based experiments
+│   │   ├── 06_aggregate_results.py   # Aggregate results
+│   │   ├── 07_robustness_tests.py    # Robustness testing
+│   │   ├── 08_generate_results_figures.py  # Generate figures
+│   │   └── run_all_experiments.py    # Run complete benchmark
+│   │
+│   └── preprocessing/                 # Data preprocessing
+│       ├── preprocess_bci_iv_2a.py   # Preprocess single subject
+│       ├── preprocess_all_bci_iv_2a.py  # Preprocess all subjects
+│       ├── combine_preprocessed_data.py  # Combine into single HDF5
+│       └── create_eeg_only_dataset.py    # Extract 22 EEG channels
+│
+├── results/                           # Results (generated during runs)
+│   ├── phase3/                        # Phase 3 results
+│   │   ├── baselines/                # Baseline model results
+│   │   └── experiments/              # Image-based model results
+│   ├── figures/                       # Generated figures
+│   └── logs/                          # Training logs
+│
+├── docs/                              # Documentation
+│   ├── README.md                      # Documentation index
+│   ├── reference/                     # Reference documentation
+│   └── archive/                       # Archived documentation
+│
+└── notebooks/                         # Jupyter notebooks (reference)
+    └── phase_2_data_preprocessing/   # Phase 2 preprocessing notebooks
+```
+
+---
+
+## Experiment Details
+
+### Transformations (9 types)
+
+1. **Gramian Angular Field (GAF)**
+   - `gaf_summation`: GASF
+   - `gaf_difference`: GADF
+
+2. **Markov Transition Field (MTF)**
+   - `mtf`: Standard MTF
+
+3. **Recurrence Plot (RP)**
+   - `recurrence`: Standard RP
+   - `recurrence_quantified`: With RQA features
+
+4. **Spectrogram**
+   - `spectrogram`: Time-frequency representation
+
+5. **Continuous Wavelet Transform (CWT)**
+   - `cwt`: Scalogram
+   - `cwt_morlet`: Using Morlet wavelet
+
+6. **Short-Time Fourier Transform (STFT)**
+   - `stft`: Time-frequency representation
+
+### Models (8 architectures)
+
+**Baseline Models (Raw Time-Series)**
+- 1D CNN: Convolutional network for time-series
+- BiLSTM: Bidirectional LSTM
+- Transformer: Self-attention on time-series
+
+**Image-Based Models (2D)**
+- ResNet-18: Pretrained on ImageNet
+- ResNet-50: Larger pretrained ResNet
+- Lightweight CNN: Custom small CNN (from scratch)
+- ViT Base: Vision Transformer (pretrained)
+- ViT Small: Smaller Vision Transformer (pretrained)
+
+### Training Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| **Optimizer** | AdamW |
+| **Learning Rate** | 0.001 |
+| **Weight Decay** | 0.0001 (image models) |
+| **Loss Function** | CrossEntropyLoss |
+| **Early Stopping Metric** | Cohen's Kappa |
+| **Warmup Epochs** | 50 |
+| **Patience** | 15 epochs |
+| **Max Epochs** | 100 |
+| **Batch Size** | 32 |
+| **Cross-Validation** | 5-fold stratified |
+
+### Evaluation Metrics
+
+- **Accuracy**: Overall classification accuracy
+- **F1 Score (Weighted)**: Accounts for class imbalance
+- **Cohen's Kappa**: Agreement adjusted for chance (used for early stopping)
+- **Confusion Matrix**: Per-class performance
+- **Training Time**: Time per epoch and total
+
+---
+
+## Key Features
+
+### Data Pipeline
+- ✅ ICA-based artifact removal
+- ✅ Band-pass filtering (0.5-40 Hz)
+- ✅ Notch filtering (50/60 Hz)
+- ✅ Epoching with baseline correction
+- ✅ Amplitude-based artifact rejection
+- ✅ Z-score normalization per channel
+- ✅ **EEG-only (22 channels, EOG excluded)**
+
+### Transformation Pipeline
+- ✅ Per-channel transformation (22 channels → 22 images)
+- ✅ Automatic averaging to single-channel image (22 images → 1 image)
+- ✅ Consistent image size (128×128)
+- ✅ Normalization to [0, 1] range
+
+### Training Infrastructure
+- ✅ AdamW optimizer for better generalization
+- ✅ Kappa-based early stopping (more robust than accuracy)
+- ✅ 50-epoch warmup before early stopping
+- ✅ 5-fold stratified cross-validation
+- ✅ Automatic GPU/CPU selection
+- ✅ Comprehensive logging and checkpointing
+
+---
+
+## Results Directory Structure
+
+After running experiments, results are organized as:
+
+```
+results/
+├── phase3/
+│   ├── baselines/
+│   │   ├── cnn1d_all_fold_results.json
+│   │   ├── bilstm_all_fold_results.json
+│   │   └── transformer_all_fold_results.json
+│   │
+│   └── experiments/
+│       ├── gaf_summation_resnet18_all_fold_results.json
+│       ├── mtf_vit_base_all_fold_results.json
+│       └── ... (45 combinations)
+│
+└── figures/
+    ├── comparison_accuracy.png
+    ├── confusion_matrices/
+    └── training_curves/
+```
+
+Each result JSON contains:
+- Mean accuracy ± std
+- Mean Kappa ± std
+- Per-fold results
+- Training history
+- Best epoch information
+- Training time
+
+---
+
+## Common Commands
+
+### Validate Installation
+
+```bash
+# Validate all transformations
+python experiments/phase_3_benchmark_experiments/01_validate_transforms.py
+
+# Validate all models
+python experiments/phase_3_benchmark_experiments/02_validate_models.py
+
+# Test complete pipeline
+python experiments/phase_3_benchmark_experiments/03_test_pipeline.py
+```
+
+### Run Specific Experiments
+
+```bash
+# Single transformation + model combination
+python experiments/phase_3_benchmark_experiments/05_run_experiments.py \
+    --transform <transform_name> \
+    --model <model_name> \
+    --device cuda:0
+
+# Examples:
+python experiments/phase_3_benchmark_experiments/05_run_experiments.py --transform gaf_summation --model resnet18 --device cuda:0
+python experiments/phase_3_benchmark_experiments/05_run_experiments.py --transform mtf --model vit_base --device cuda:0
+python experiments/phase_3_benchmark_experiments/05_run_experiments.py --transform recurrence --model lightweight_cnn --device cuda:0
+```
+
+### Aggregate and Visualize Results
+
+```bash
+# Aggregate all results
+python experiments/phase_3_benchmark_experiments/06_aggregate_results.py
+
+# Generate figures
+python experiments/phase_3_benchmark_experiments/08_generate_results_figures.py
+```
+
+---
+
+## Hardware Requirements
+
+### Minimum
+- **CPU**: 4 cores
+- **RAM**: 16 GB
+- **Storage**: 5 GB free space
+
+### Recommended
+- **GPU**: NVIDIA GPU with 8+ GB VRAM (RTX 3070 or better)
+- **CPU**: 8+ cores
+- **RAM**: 32 GB
+- **Storage**: 10 GB free space
+
+### Expected Runtime
+- **Baseline model (1 fold)**: ~5-10 minutes on GPU
+- **Image-based model (1 fold)**: ~15-30 minutes on GPU
+- **Complete benchmark (45 combinations)**: ~12-24 hours on GPU
+
+---
+
+## Troubleshooting
+
+### Out of Memory (OOM)
+```bash
+# Reduce batch size
+python experiments/phase_3_benchmark_experiments/05_run_experiments.py \
+    --transform gaf_summation \
+    --model resnet18 \
+    --batch_size 16 \
+    --device cuda:0
+```
+
+### Data File Not Found
+```bash
+# Ensure EEG-only dataset exists
+python experiments/phase_2_preprocessing/create_eeg_only_dataset.py
+```
+
+### Import Errors
+```bash
+# Reinstall package in development mode
 pip install -e .
 ```
 
-## 🚀 Quick Start
+---
 
-### 1. Download Datasets
-```bash
-python src/data/downloaders.py --dataset bci_iv_2a --output data/raw
-```
+## Citation
 
-### 2. Preprocess EEG Data
-```bash
-python src/data/preprocessors.py --dataset bci_iv_2a --config experiments/configs/preprocessing.yaml
-```
-
-### 3. Generate Image Transformations
-```bash
-python src/transforms/gaf.py --input data/preprocessed/bci_iv_2a --output data/images/gaf
-```
-
-### 4. Train Models
-```bash
-python experiments/scripts/run_experiment.py --config experiments/configs/bci_iv_2a_gaf_resnet18.yaml
-```
-
-## 📁 Project Structure
-
-```
-├── data/               # Datasets (raw, preprocessed, images)
-├── src/                # Source code
-│   ├── data/          # Data loading and preprocessing
-│   ├── transforms/    # T2I transformations
-│   ├── models/        # Neural network architectures
-│   ├── training/      # Training loops and utilities
-│   ├── evaluation/    # Metrics and analysis
-│   └── utils/         # Helper functions
-├── experiments/        # Experiment configs and scripts
-├── notebooks/          # Jupyter notebooks for exploration
-├── results/            # Model checkpoints, logs, metrics
-└── tests/             # Unit tests
-```
-
-## 📝 Implementation Phases
-
-This project follows a strict phase-by-phase implementation plan:
-
-1. **Phase 1**: Project Infrastructure & Environment Setup ✅
-2. **Phase 2**: Data Acquisition & Preprocessing
-3. **Phase 3**: Image Transformation Implementation
-4. **Phase 4**: Model Architecture Implementation
-5. **Phase 5**: Training Infrastructure
-6. **Phase 6**: Evaluation & Analysis
-7. **Phase 7**: Experiment Orchestration
-8. **Phase 8**: Results Analysis & Reporting
-
-See `Plans/IMPLEMENTATION_PLAN.md` for detailed specifications.
-
-## 🔬 Transformations Implemented
-
-- **GAF (Gramian Angular Fields)**: GASF and GADF variants
-- **MTF (Markov Transition Fields)**: State transition encoding
-- **Recurrence Plots**: Phase space recurrence visualization
-- **Spectrograms**: STFT time-frequency representation
-- **Scalograms**: Continuous wavelet transform
-- **Topographic Maps**: Spatio-spectral feature images (SSFI)
-
-## 🤖 Models
-
-- **CNNs**: ResNet-18/34/50, Custom Lightweight CNN
-- **Vision Transformers**: ViT-B/16, ViT-S/16
-- **Raw-Signal Baselines**: 1D CNN, LSTM/BiLSTM, Transformer, EEGNet
-
-## 📊 Evaluation Metrics
-
-- Accuracy, F1-score (macro/weighted), AUC
-- Confusion matrices
-- Wilcoxon signed-rank tests for pairwise comparisons
-- Repeated-measures ANOVA
-- Robustness analysis (noise, channel dropout, temporal shifts)
-
-## 🧪 Testing
-
-```bash
-# Run all tests
-pytest tests/
-
-# Run with coverage
-pytest --cov=src tests/
-```
-
-## 📖 Citation
-
-If you use this code or methodology in your research, please cite:
+If you use this codebase, please cite:
 
 ```bibtex
-@misc{eeg2img-benchmark-2026,
-  title={Comparative Benchmark Study: EEG Time-Series-to-Image Transformations},
+@article{eeg2img_benchmark_2026,
+  title={Benchmarking EEG-to-Image Transformations for Motor Imagery Classification},
   author={Your Name},
-  year={2026},
-  publisher={GitHub},
-  url={https://github.com/JanithRamanayake523/EEG2Img-Benchmark-Study}
+  journal={Under Review},
+  year={2026}
 }
 ```
 
-## 📄 License
+---
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## License
 
-## 🤝 Contributing
+MIT License - See LICENSE file for details
 
-Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Follow the implementation plan strictly
-4. Add tests for new functionality
-5. Submit a pull request
+---
 
-## 📧 Contact
+## Changelog
 
-For questions or collaborations, please open an issue or contact [your.email@example.com]
+### Version 1.0 (2026-04-12)
+- ✅ Phase 2: Complete preprocessing pipeline
+- ✅ Phase 3: Benchmark experiments implemented
+- ✅ EEG-only data extraction (22 channels)
+- ✅ AdamW optimizer + Kappa-based early stopping
+- ✅ 9 transformations × 5 image models + 3 baselines
+- ✅ Comprehensive documentation and code organization
 
-## 🙏 Acknowledgments
+---
 
-This research builds upon:
-- Kessler et al. (2025) - EEG preprocessing effects
-- Prabhukumar et al. (2025) - MTF in EEG
-- Hao et al. (2021) - Recurrence plot CNNs
-- Mastandrea et al. (2023) - Spatio-spectral images
+**Status**: Ready for production runs
+**Last Updated**: 2026-04-12

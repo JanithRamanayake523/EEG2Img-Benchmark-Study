@@ -1,0 +1,72 @@
+# Image Transformation Configurations
+
+# Gramian Angular Field (GAF)
+gaf_summation:
+  type: "gaf"
+  method: "summation"
+  image_size: 128
+  sample_range: [-1, 1]
+
+gaf_difference:
+  type: "gaf"
+  method: "difference"
+  image_size: 128
+  sample_range: [-1, 1]
+
+# Markov Transition Field (MTF)
+mtf_q8:
+  type: "mtf"
+  image_size: 64
+  n_bins: 8
+  strategy: "quantile"
+
+mtf_q16:
+  type: "mtf"
+  image_size: 64
+  n_bins: 16
+  strategy: "quantile"
+
+# Recurrence Plot
+recurrence_plot:
+  type: "recurrence"
+  image_size: 128
+  threshold: 0.1
+  metric: "euclidean"
+
+# Spectrogram (STFT)
+spectrogram:
+  type: "spectrogram"
+  n_fft: 128
+  hop_length: 32
+  window: "hann"
+  image_size: 128
+  freq_range: [0, 40]  # Hz
+
+# Scalogram (CWT)
+scalogram_morlet:
+  type: "scalogram"
+  wavelet: "morl"  # Morlet wavelet
+  scales: 64
+  image_size: 64
+  freq_range: [0.5, 40]  # Hz
+
+scalogram_mexican:
+  type: "scalogram"
+  wavelet: "mexh"  # Mexican hat wavelet
+  scales: 64
+  image_size: 64
+  freq_range: [0.5, 40]  # Hz
+
+# Topographic Maps
+topographic:
+  type: "topographic"
+  image_size: 64
+  n_time_windows: 5
+  interpolation: "cubic"
+  head_radius: 0.5
+
+# Multi-channel strategies
+channel_strategy:
+  stacking: "stack"  # Stack channels as separate image channels
+  averaging: "average"  # Average across channels
+  per_channel: "separate"  # Generate separate image per channel

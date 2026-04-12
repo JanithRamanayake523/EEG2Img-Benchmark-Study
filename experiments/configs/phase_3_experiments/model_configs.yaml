@@ -1,0 +1,88 @@
+# Model Architecture Configurations
+
+# CNN Models
+resnet18:
+  type: "cnn"
+  architecture: "resnet18"
+  pretrained: true
+  num_classes: 4
+  dropout: 0.5
+  freeze_backbone: false
+  fine_tune_layers: 2  # Number of layers to fine-tune from end
+
+resnet34:
+  type: "cnn"
+  architecture: "resnet34"
+  pretrained: true
+  num_classes: 4
+  dropout: 0.5
+  freeze_backbone: false
+  fine_tune_layers: 2
+
+resnet50:
+  type: "cnn"
+  architecture: "resnet50"
+  pretrained: true
+  num_classes: 4
+  dropout: 0.5
+  freeze_backbone: false
+  fine_tune_layers: 2
+
+lightweight_cnn:
+  type: "cnn"
+  architecture: "lightweight"
+  num_classes: 4
+  n_filters: [32, 64, 128]
+  kernel_sizes: [3, 3, 3]
+  pool_sizes: [2, 2, 2]
+  dropout: 0.5
+
+# Vision Transformer Models
+vit_base:
+  type: "vit"
+  architecture: "vit_base_patch16_224"
+  pretrained: true
+  num_classes: 4
+  image_size: 224
+  patch_size: 16
+  dropout: 0.1
+  attention_dropout: 0.1
+
+vit_small:
+  type: "vit"
+  architecture: "vit_small_patch16_224"
+  pretrained: true
+  num_classes: 4
+  image_size: 224
+  patch_size: 16
+  dropout: 0.1
+  attention_dropout: 0.1
+
+# Baseline Models (for raw time-series)
+cnn1d:
+  type: "baseline"
+  architecture: "cnn1d"
+  num_classes: 4
+  n_filters: 32
+  kernel_size: 5
+  n_layers: 4
+  dropout: 0.5
+
+bilstm:
+  type: "baseline"
+  architecture: "bilstm"
+  num_classes: 4
+  hidden_size: 128
+  num_layers: 2
+  dropout: 0.5
+  bidirectional: true
+
+transformer:
+  type: "baseline"
+  architecture: "transformer"
+  num_classes: 4
+  d_model: 128
+  nhead: 8
+  num_layers: 4
+  dim_feedforward: 512
+  dropout: 0.1
